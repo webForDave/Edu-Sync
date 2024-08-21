@@ -1,0 +1,1 @@
+import hero_bg  from "/assets/index.js";
