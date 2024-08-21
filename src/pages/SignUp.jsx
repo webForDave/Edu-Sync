@@ -1,5 +1,7 @@
 import { FcGoogle } from "react-icons/fc"
 import { Link } from "react-router-dom"
+import FormButton from "../coponents/formButton"
+import Input from "../coponents/formInput"
 
 const SignUp = () => {
   return (
@@ -14,20 +16,20 @@ const SignUp = () => {
                 <form>
                     <div>
                         <label htmlFor="name">
-                            <input type="text" placeholder="Name" id="name" className="w-full h-auto p-[5px] rounded-[4px] my-[10px] border border-gray-400" />
+                            <Input placeholder='Name' id='name' type='text' />
                         </label>
                     </div>
                     <div>
                         <label htmlFor="email">
-                            <input type="email" placeholder="Email Address" id="email" className="w-full h-auto p-[5px] rounded-[4px] my-[10px] border border-gray-400" />
+                            <Input placeholder='Email Address' id='email' type='email' />
                         </label>
                     </div>
                     <div>
                         <label htmlFor="password">
-                            <input type="password" placeholder="Password" id="password" className="w-full h-auto p-[5px] rounded-[4px] my-[10px] border border-gray-400" />
+                            <Input placeholder='Password' id='password' type='password' />
                         </label>
                     </div>
-                    <button className="bg-[#1D3446] w-full h-auto p-[8px] mx-auto rounded-[8px] text-[#fff] lato-bold">Sign Up</button>
+                    <FormButton>Sign Up</FormButton>
                 </form>
 
                 <p className="py-[10px] lato-regular text-center text-gray-700 ">Already have an account? <Link to='/log-in' className="text-[#1D3446] font-bold">Log In</Link></p>
