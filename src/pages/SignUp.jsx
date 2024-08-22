@@ -2,8 +2,20 @@ import { FcGoogle } from "react-icons/fc"
 import { Link } from "react-router-dom"
 import FormButton from "../coponents/formButton"
 import Input from "../coponents/formInput"
+import { useForm } from "react-hook-form"
+import { DevTool } from "@hookform/devtools"
 
 const SignUp = () => {
+
+    const form = useForm();
+    const {register, handleSubmit, formState:{errors}, reset, control} = form;
+
+    const onSubmit = data => {
+        console.log(data);
+
+        reset();
+    }
+
   return (
     <div>
         <div className="w-full h-screen bg-gray-200 flex justify-center items-center">
@@ -13,23 +25,64 @@ const SignUp = () => {
 
                 {/* SIGNUP FORM */}
 
-                <form>
+                <form onSubmit={handleSubmit(onSubmit)}>
                     <div>
                         <label htmlFor="name">
-                            <Input placeholder='Name' id='name' type='text' />
+                            <Input placeholder='Name' id='name' type='text'
+                            register={register('name', {
+                                required: 'Name is required'
+                            })}
+                            error={errors.name}
+                            />
+                            {errors.name && <p className="lato-bold text-red-500 text-sm mt-1">{errors.name.message}</p>}
                         </label>
                     </div>
+
                     <div>
                         <label htmlFor="email">
-                            <Input placeholder='Email Address' id='email' type='email' />
+                            <Input type='email' placeholder='Email Address' id='email'
+                            register={register('email', {
+                                required: 'Email is required',
+                                pattern: {
+                                    value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
+                                    message: 'Please enter a valid Email Address'
+                                }
+                            })}
+                            error={errors.email}
+                            />
+                            {errors.email && <p className="lato-bold text-red-500 text-sm mt-1">{errors.email.message}</p>}
                         </label>
                     </div>
                     <div>
-                        <label htmlFor="password">
-                            <Input placeholder='Password' id='password' type='password' />
+                        <label htmlFor="create_password">
+                            <Input placeholder='Create Password' id='create_password' type='password'
+                            register={register('create_password', {
+                                required: 'Password is required',
+                                pattern: {
+                                    value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                                    message: 'Password must contain at least 8 characters, including letters and numbers'
+                                  }
+                            })}
+                            error={errors.create_password}
+                            />
+                            {errors.create_password && <p className="lato-bold text-red-500 text-sm mt-1">{errors.create_password.message}</p>}
+
+                        </label>
+                        <label htmlFor="confim_password">
+                            <Input placeholder='Confirm Password' id='confirm_password' type='password'
+                            register={register('confirm_password', {
+                                required: 'Please confirm your password',
+                                validate: value =>
+                                    value === create_password || 'Passwords do not match'
+                            })}
+                            error={errors.confirm_password}
+                            />
+                            {errors.confirm_password && <p className="lato-bold text-red-500 text-sm mt-1">{errors.confirm_password.message}</p>}
+
                         </label>
                     </div>
                     <FormButton>Sign Up</FormButton>
+                    {/* <DevTool control={control} /> */}
                 </form>
 
                 <p className="py-[10px] lato-regular text-center text-gray-700 ">Already have an account? <Link to='/log-in' className="text-[#1D3446] font-bold">Log In</Link></p>
