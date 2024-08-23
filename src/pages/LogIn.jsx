@@ -3,21 +3,28 @@ import { Link } from "react-router-dom"
 import Input from "../coponents/formInput"
 import FormButton from "../coponents/formButton"
 import { useForm } from "react-hook-form"
-import { DevTool } from "@hookform/devtools"
+import axios from "axios"
+import { useState } from "react"
 
 const LogIn = () => {
+    // const [successMessage, setSuccessMessage] = useState('');
+
 
     const form = useForm();
-    const { register, control, handleSubmit, formState: {errors}, reset } = form;
+    const { register, handleSubmit, formState: {errors}, reset } = form;
 
-    const onSubmit = data => {
+    const onSubmit = async data => {
         //Handle form data
-        console.log(data);
+        try{
+            const mockAPI = 'http://localhost:5000/auth';
+            const response = await axios.post(mockAPI, data);
+
+        } catch (error){
+            setErrorMessage('Failed to submit form. Please try again.');
+        }
 
         //clear inputs 
         reset();
-
-        //Make Axios call
 
     }
 
@@ -31,6 +38,7 @@ const LogIn = () => {
                 {/* LOGIN FORM */}
 
                 <form onSubmit={handleSubmit(onSubmit)}>
+                    {/* {successMessage && <p className="lato-bold text-green-500">{successMessage}</p>} */}
                     <div>
                         <label htmlFor="email">
                             <Input type='email' placeholder='Email Address' id='email'
@@ -62,7 +70,6 @@ const LogIn = () => {
                         </label>
                     </div>
                     <FormButton>Log In</FormButton>
-                    {/* <DevTool control={control} /> */}
                 </form>
 
                 <p className="py-[10px] lato-regular text-center text-gray-700 ">Don't have an account? <Link to='/sign-up' className="text-[#1D3446] font-bold">Sign Up</Link></p>

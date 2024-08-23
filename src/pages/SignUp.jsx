@@ -3,15 +3,22 @@ import { Link } from "react-router-dom"
 import FormButton from "../coponents/formButton"
 import Input from "../coponents/formInput"
 import { useForm } from "react-hook-form"
-import { DevTool } from "@hookform/devtools"
+import { useState } from "react"
+import axios from "axios"
 
 const SignUp = () => {
+    const [successMessage, setSuccessMessage] = useState('');
 
     const form = useForm();
-    const {register, handleSubmit, formState:{errors}, reset, control} = form;
+    const {register, handleSubmit, formState:{errors}, reset, control, getValues} = form;
 
-    const onSubmit = data => {
-        console.log(data);
+    const onSubmit = async data => {
+        try{
+            const mockEndpoint = '';
+            const response = await axios.post(mockEndpoint, data) 
+        } catch (error) {
+            console.log(error);
+        }
 
         reset();
     }
@@ -26,15 +33,27 @@ const SignUp = () => {
                 {/* SIGNUP FORM */}
 
                 <form onSubmit={handleSubmit(onSubmit)}>
+                    {successMessage && <p className="lato-bold text-green-500">{successMessage}</p>}
                     <div>
-                        <label htmlFor="name">
-                            <Input placeholder='Name' id='name' type='text'
-                            register={register('name', {
-                                required: 'Name is required'
+                        <label htmlFor="firsr_name">
+                            <Input placeholder='First Name' id='first_name' type='text'
+                            register={register('first_name', {
+                                required: 'First name is required'
                             })}
-                            error={errors.name}
+                            error={errors.first_name}
                             />
-                            {errors.name && <p className="lato-bold text-red-500 text-sm mt-1">{errors.name.message}</p>}
+                            {errors.first_name && <p className="lato-bold text-red-500 text-sm mt-1">{errors.first_name.message}</p>}
+                        </label>
+                    </div>
+                    <div>
+                        <label htmlFor="last_name">
+                            <Input placeholder='Last Name' id='last_name' type='text'
+                            register={register('last_name', {
+                                required: 'Last name is required'
+                            })}
+                            error={errors.last_name}
+                            />
+                            {errors.last_name && <p className="lato-bold text-red-500 text-sm mt-1">{errors.last_name.message}</p>}
                         </label>
                     </div>
 
@@ -65,7 +84,7 @@ const SignUp = () => {
                             })}
                             error={errors.create_password}
                             />
-                            {errors.create_password && <p className="lato-bold text-red-500 text-sm mt-1">{errors.create_password.message}</p>}
+                            {errors.create_password && <p className="lato-bold text-red-500 text-sm mt-1 max-w-xs">{errors.create_password.message}</p>}
 
                         </label>
                         <label htmlFor="confim_password">
@@ -73,7 +92,7 @@ const SignUp = () => {
                             register={register('confirm_password', {
                                 required: 'Please confirm your password',
                                 validate: value =>
-                                    value === create_password || 'Passwords do not match'
+                                    value === getValues('create_password') || 'Passwords do not match'
                             })}
                             error={errors.confirm_password}
                             />
@@ -82,7 +101,6 @@ const SignUp = () => {
                         </label>
                     </div>
                     <FormButton>Sign Up</FormButton>
-                    {/* <DevTool control={control} /> */}
                 </form>
 
                 <p className="py-[10px] lato-regular text-center text-gray-700 ">Already have an account? <Link to='/log-in' className="text-[#1D3446] font-bold">Log In</Link></p>
