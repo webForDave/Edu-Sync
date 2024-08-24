@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Button from "../coponents/Button";
-import features from '../coponents/featuresData';
-import FeaturesCard from "../coponents/FeaturesCard";
+import Button from "../coponents/HomepageComponents/Button";
+import features from '../coponents/HomepageComponents/featuresData';
+import FeaturesCard from "../coponents/HomepageComponents/FeaturesCard";
 import { Link } from "react-router-dom";
 
 
