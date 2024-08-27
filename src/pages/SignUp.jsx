@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import FormButton from "../coponents/formButton";
 import { useState } from "react";
 import FormInput from "../coponents/FormInput";
+import axios from "axios";
 
 const FORM_INPUT = {
   first_name: '',
@@ -77,14 +78,19 @@ const SignUp = () => {
     return isValid;
   }
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    
     const isValid = formValidator();
 
-    if(isValid) {
-      console.log(formData);
-      setFormData(FORM_INPUT);
+    try{
+      if(isValid) {
+        setFormData(FORM_INPUT);
+      }
+      const mockAPI = 'http://localhost:4000/users';
+      const response = await axios.post(mockAPI, formData);
+      console.log(response)
+    } catch(error) {
+      console.log(error);
     }
   }
 
@@ -117,6 +123,7 @@ const SignUp = () => {
 
           <FormButton text='Sign up' backgroundColor='#1D3446' type='submit' />
         </form>
+        <Link to='/google.com'><FormButton text='Sign up with Google' backgroundColor='#1D3446'/></Link>
         <p className="lato-bold-italic p-[10px] text-center">Already have an account? <Link to='/log-in' className="text-[#1D3446]">Log In</Link></p>
       </div>
     </div>
