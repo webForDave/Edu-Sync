@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FormButton from "../coponents/formButton";
 import { useState } from "react";
 import FormInput from "../coponents/FormInput";
@@ -22,6 +22,7 @@ const SignUp = () => {
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
 
   let [confirmPasswordMessage, setConfirmPasswordMessage] = useState(false);
+  let [emailMessage, setEmailMessage] = useState(false);
 
   const handleChange = e => {
     const value = e.target.value
@@ -32,6 +33,7 @@ const SignUp = () => {
   };
   
   const formValidator = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     let isValid = true
 
@@ -55,6 +57,14 @@ const SignUp = () => {
     } else if(formData.email != '') {
       setEmailError(false);
     }
+
+    // if(emailRegex.test(formData.email)) {
+    //   setEmailMessage(true);
+    //   isValid = false;
+    // } else {
+    //   setEmailMessage(false); 
+    // }
+    console.log(!emailRegex.test(formData.email))
 
     if(formData.password === '') {
       setPasswordError(true);
@@ -110,7 +120,7 @@ const SignUp = () => {
           </label>
 
           <label htmlFor="email">
-            <FormInput type='email' id='email' name='email' placeholder='Email Address' value={formData.email} handleChange={handleChange} error={emailError} />
+            <FormInput  id='email' name='email' placeholder='Email Address' value={formData.email} handleChange={handleChange} error={emailError} emailMessage={emailMessage}/>
           </label>
 
           <label htmlFor="password">

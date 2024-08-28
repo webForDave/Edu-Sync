@@ -1,12 +1,5 @@
 {
   "users": [
-    {
-      "id": "9e1d",
-      "first_name": "David",
-      "last_name": "Akinola",
-      "email": "dakin@gmail.com",
-      "password": "dakins2004",
-      "confirm_password": "dakins2004"
-    }
+    
   ]
 }
